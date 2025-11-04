@@ -8,16 +8,13 @@ eureka:
 spring:
   cloud:
     gateway:
-      routes:
-        - id: user-service
-          predicates:
-            - Path=/user/*
-          uri: llb://user-service
-        - id: second
-          predicates:
-            - Path=/second/
-          uri: localhost:8082
-        - id : auth-server
-          predicates:
-            - Path=/login/
-          uri: localhost:8088
+      server:
+        webmvc:
+          routes:
+            user-service:
+              uri: http://localhost:8080
+              predicates:
+                - Path=/user
+              filters:
+                - StripPrefix=1
+                - AddRequestHeader=X-Gateway, MVC-Gateway
