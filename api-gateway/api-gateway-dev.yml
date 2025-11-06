@@ -15,7 +15,7 @@ spring:
             user-service:
               uri: lb://user-service
               predicates:
-                - Path=/user/**
+                - Path=/user/**, /user-service/v3/api-docs
               filters:
                 - name: AddRequestHeader
                   args:
@@ -23,3 +23,15 @@ spring:
                       values: user-service
           # (optional) trusted proxy setting
           trusted-proxies: 10\.0\.0\..*
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway Service
+      - url: /user-service/v3/api-docs
+        name: user-service
