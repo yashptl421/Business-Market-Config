@@ -1,6 +1,6 @@
 my:
   message: Yash Patel
-
+#Register eureka client config
 eureka:
   client:
     register-with-eureka: true
@@ -8,13 +8,55 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
 
+#Swagger Open APi Config
 openapi:
   service:
     title: user-service doc
     version: 1.0.0
     url: http://localhost:8765 #api gateway url
+
+#Swagger document
 springdoc:
   api-docs:
     path: /user-service/v3/api-docs
   swagger-ui:
     path: /user-service/swagger-ui.html 
+
+   # JPA & MySql db config note hibernet dialect is commented, was throwing warrning
+  datasource:
+    url: jdbc:mysql://localhost:3307/userservice
+    username: root
+    password: ypatel
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        #dialect: org.hibernate.dialect.MySQLDialect
+        id.new_generator_mapping: false
+        show-sql: true
+        format_sql: false
+        ddl-auto: update
+    generate-ddl: true
+
+  # validation
+  mvc:
+    hidden method:
+      filter.enabled: true
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration
+
+  # log SQL
+logging:
+  level:
+    org.hibernate:
+      SQL: DEBUG
+      type.description.sql.BasicBinder: TRACE
+
+# expiration token
+jwt:
+  secret: L8KwmXTT/ByT7e9ZiO0s5cGedE7cSfS5YKpC0Qn/qO8=
+  expiration: 86400
+  # expiration refresh token
+  refreshExpiration: 172800
+  # refresh token
+refresh:
+  token.url: http://localhost:8082/api/auth/refresh
