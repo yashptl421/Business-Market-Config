@@ -22,6 +22,7 @@ springdoc:
   swagger-ui:
     path: /user-service/swagger-ui.html 
 
+spring:
    # JPA & MySql db config note hibernet dialect is commented, was throwing warrning
   datasource:
     url: jdbc:mysql://localhost:3307/userservice
